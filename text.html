@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>11.11日</title>
+    <style>
+        .container{
+            width: 400px;
+            margin: 0 auto;
+        }
+        .link{
+            width: 500px;
+            height: 50px;
+        }
+        .add,.delete,.exc{
+            width: 80px;
+            height: 35px;
+            line-height: 35px;
+            outline: none;
+            border: 1px solid cornflowerblue;
+            background: cornflowerblue;
+            border-radius: 10px;
+        }
+        .add,.delete,.exc:hover{
+            cursor: pointer;
+        }
+        .main{
+            background:#ffffff;
+        }
+        .main table{
+            width: 500px;
+            text-align:center;
+            border-collapse: collapse;
+        }
+        .main table td{
+            border:1.5px solid #000000;
+        }
+        .main table tr:hover{
+            background: dimgrey;
+            cursor: pointer;
+        }
+        .con,.can{
+            width: 80px;
+            height: 35px;
+            line-height: 35px;
+            outline: none;
+            border: 1px solid orange;
+            background: orange;
+            border-radius: 10px;
+        }
+        .con:hover{
+            cursor: pointer;
+        }
+        .can:hover{
+            cursor: pointer;
+        }
+        .content{
+            /*display: none;隐藏元素*/
+            display: none;
+            margin-bottom: 20px;
+        }
+        .content{
+            width: 500px;
+            margin: 10px auto;
+        }
+        .content div{
+            margin: 10px 0px;
+        }
+        .content input[type="text"]{
+            width: 180px;
+            height: 25px;
+            text-indent: 0.7em;
+            border: 2px solid #ccc;
+            outline: none;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="link">
+        <button class="add" onclick="show()">添加</button>
+        <button class="delete" onclick="deleteElement()">删除</button>
+        <button class="exc" onclick="excColour()">换肤</button>
+    </div>
+    <div class="content" id="content">
+        <div class="id-div">
+            <span>序号：</span>
+            <input type="text" id="idInput" placeholder="请输入序号"/>
+        </div>
+        <div class="number-id">
+            <span>学号：</span>
+            <input type="text" id="numberInput" placeholder="请输入学号"/>
+        </div>
+        <div class="name-div">
+            <span>姓名：</span>
+            <input type="text" id="nameInput" placeholder="请输入姓名"/>
+        </div>
+        <div class="sex-div">
+            <span>性别：</span>
+            <input type="radio" name="sex" id="sexInput" checked/>男
+            <input type="radio" name="sex" id="sexInput"/>女
+        </div>
+        <div class="tel-div">
+            <span>电话：</span>
+            <input type="text" id="telInput" placeholder="请输入电话"/>
+        </div>
+        <div class="concan">
+            <button class="con" onclick="addDom()">确定</button>
+            <button class="can" onclick="cancelAdd()">取消</button>
+        </div>
+    </div>
+    <div class="main">
+        <table>
+            <tbody id="tbody">
+            <tr>
+                <td>序号</td>
+                <td>学号</td>
+                <td>姓名</td>
+                <td>性别</td>
+                <td>电话</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>001</td>
+                <td>张三</td>
+                <td>男</td>
+                <td>15486578524</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>002</td>
+                <td>李四</td>
+                <td>男</td>
+                <td>18597634861</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+<script>
+    function show() {
+        var div = document.getElementById("content");
+        div.style.display = "block";
+    }
+    function cancelAdd() {
+        var div = document.getElementById("content");
+        div.style.display = "none";
+    }
+    function addDom() {
+        var n=5;
+        var tdArr = [];//生成td
+        for (var i=0;i<n;i++)
+        {
+            var td = document.createElement("td");
+            tdArr.push(td);
+        }
+        //依次生成文本节点
+        var idInput = document.getElementById("idInput");
+        var numberInput = document.getElementById("numberInput");
+        var nameInput = document.getElementById("nameInput");
+        var telInput = document.getElementById("telInput");
+
+        var txt1 = document.createTextNode(idInput.value);
+        var txt2 = document.createTextNode(numberInput.value);
+        var txt3 = document.createTextNode(nameInput.value);
+        //获取性别
+        var txt4;
+        var sexInputs = document.getElementsByName("sex");
+        if (sexInputs[0].checked) {
+            txt4 = document.createTextNode("男");
+        }else {
+            txt4 = document.createTextNode("女")
+        }
+        var txt5 = document.createTextNode(telInput.value);
+        var txtArr = [txt1,txt2,txt3,txt4,txt5];
+        for (var j=0;j<n;j++)
+        {
+            tdArr[j].appendChild(txtArr[j]);
+        }
+        var tr =document.createElement("tr");
+        for (var k=0;k<n;k++)
+        {
+            tr.appendChild(tdArr[k]);
+        }
+        var tbody = document.getElementById("tbody");
+        tbody.appendChild(tr);
+        var div = document.getElementById("content");
+        div.style.display = "none";
+    }
+    //删除
+    function deleteElement() {
+        var tbody = document.getElementById("tbody")
+        var trs = document.getElementsByTagName("tr")
+        console.log(trs.length);
+        if(trs.length <=1)
+        {
+            alert("当前没有内容可以删除！")
+        }
+        else{
+            tbody.removeChild(trs[trs.length-1]);
+        }
+    }
+    function excColour() {
+
+    }
+</script>
+</body>
+</html>
